@@ -8,11 +8,11 @@ reveals one number of the exit code. Solve all four, enter the code, and escape.
 
 | Member | Responsibility | File |
 |---|---|---|
-| TBD | Puzzle #1 | `src/puzzle1.cpp` |
-| TBD | Puzzle #2 | `src/puzzle2.cpp` |
-| TBD | Puzzle #3 | `src/puzzle3.cpp` |
-| TBD | Puzzle #4 | `src/puzzle4.cpp` |
-| TBD | Rooms, progress tracker, exit code | `src/game.cpp` |
+| Sabrina | Puzzle #1 | `src/puzzle1.cpp` |
+| Leopold | Puzzle #2 | `src/puzzle2.cpp` |
+| Zach | Puzzle #3 | `src/puzzle3.cpp` |
+| Austin | Puzzle #4 | `src/puzzle4.cpp` |
+| TBD Zach?| Rooms, progress tracker, exit code | `src/game.cpp` |
 
 ## Project structure
 
