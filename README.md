@@ -8,8 +8,8 @@ reveals one number of the exit code. Solve all four, enter the code, and escape.
 
 | Member | Responsibility | File |
 |---|---|---|
-| Sabrina | Puzzle #1 | `src/puzzle1.cpp` |
-| Zach | Puzzle #2 | `src/puzzle2.cpp` |
+| TBD | Puzzle #1 | `src/puzzle1.cpp` |
+| TBD | Puzzle #2 | `src/puzzle2.cpp` |
 | TBD | Puzzle #3 | `src/puzzle3.cpp` |
 | TBD | Puzzle #4 | `src/puzzle4.cpp` |
 | TBD | Rooms, progress tracker, exit code | `src/game.cpp` |
@@ -28,8 +28,7 @@ escape-room-game/
 │   ├── puzzle2.cpp
 │   ├── puzzle3.cpp
 │   └── puzzle4.cpp
-├── docs/
-│   └── pseudocode.md  planning pseudocode for each part
+├── docs
 ├── CMakeLists.txt
 └── README.md
 ```
