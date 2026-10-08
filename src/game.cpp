@@ -32,7 +32,7 @@ private:
     int index; // puzzle selection
 public:
     ActivePuzzle(int index) : index(index) {}
-    State* run() override
+    State* run() override;
 };
 
 //TODO: Add Room states - clueroom, intro, escape, code entry states
@@ -43,16 +43,16 @@ State* PuzzleRoom::run() {
     cout << "1-3- pick a puzzle, q- quit: ";
     string choice;
 
-    if (choice == "1") return new PuzzleState(0);
-    if (choice == "2") return new PuzzleState(1);
-    if (choice == "3") return new PuzzleState(2);
+    if (choice == "1") return new ActivePuzzle(0);
+    if (choice == "2") return new ActivePuzzle(1);
+    if (choice == "3") return new ActivePuzzle(2);
     if (choice == "q") return nullptr;
 
     //TODO: REFINE INPUT VALIDATION
     else return nullptr;
 }
 
-State* PuzzleState::run() {
+State* ActivePuzzle::run() {
     int digit = -1;
     if (index==0) digit = puzzle1();
     if (index==1) digit = puzzle2();
@@ -61,8 +61,6 @@ State* PuzzleState::run() {
 
     cout << "Puzzle " << index + 1 << "returned:" << digit << endl;
     return new PuzzleRoom();
-
-
 
 }
 
