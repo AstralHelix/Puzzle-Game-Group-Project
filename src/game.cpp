@@ -72,7 +72,7 @@ State* Intro::run(Progress& progress) {
     cout << "I don't know if we should be in here... This place looks like it hasn't been visited in years." << endl;
     cout << "But hey, we came all this way, why stop now? But whatever you do don't let that door clo.... *CLICK*" << endl;
     cout << "Great looks like we're stuck. I see a keypad, but how could we find the code." << endl;
-    cout << "Hey! There's another room here - and it looks like it leads to more area's with puzzles" << endl;
+    cout << "Hey! There's another room here - and it looks like it leads to more areas with puzzles" << endl;
     cout << "It looks like we'll need to complete the puzzles to get out of here!" << endl;
 
     return new ClueRoom();
@@ -89,7 +89,7 @@ State* ClueRoom::run(Progress& progress) {
     cout << endl << "p - puzzle room, d - exit door, q - quit: ";
     string choice;
 
-    if (!(cin >> choice)) return new PuzzleRoom();
+    if (!(cin >> choice)) return nullptr;
 
     if (choice=="p" || choice == "P") return new PuzzleRoom();
     if (choice=="d" || choice =="D") return new CodeEntry();
@@ -104,6 +104,8 @@ State* PuzzleRoom::run(Progress& progress) {
     cout << "1-3 - pick a puzzle, c - clue room, q - quit: ";
     string choice;
 
+    if (!(cin >> choice)) return nullptr;
+
     if (choice == "1") return new ActivePuzzle(0);
     if (choice == "2") return new ActivePuzzle(1);
     if (choice == "3") return new ActivePuzzle(2);
@@ -116,7 +118,7 @@ State* PuzzleRoom::run(Progress& progress) {
 State* ActivePuzzle::run(Progress& progress) {
 
     if (progress.solved[index]) {
-        cout << "Puzzle " << index + 1 << " is already solved. It's digit is " << progress.digits[index] << "." << endl;
+        cout << "Puzzle " << index + 1 << " is already solved. Its digit is " << progress.digits[index] << "." << endl;
         return new PuzzleRoom();
     }
 
@@ -128,7 +130,7 @@ State* ActivePuzzle::run(Progress& progress) {
     if (index==2) digit = puzzle3();
 
 
-    if (digit >=0) {
+    if (digit >=0 && digit <=9) {
         progress.solved[index] = true;
         progress.digits[index] = digit;
         cout << "Puzzle " << index + 1 << " solved. Digit: " << digit << endl;
@@ -153,7 +155,7 @@ State* CodeEntry::run(Progress &progress) {
 
     if (allSolved && entered == code) return new Escaped();
 
-    cout << "Looks like we're stuck for a bit longer. Let's go back and check out work..." << endl;
+    cout << "Looks like we're stuck for a bit longer. Let's go back and check our work..." << endl;
     return new ClueRoom();
 }
 
