@@ -35,11 +35,10 @@ int puzzle1()
 
         string line;
 
-        // if the input stream closes (EOF), exit instead of looping forever
+        // if the input stream closes (EOF), throw so the game can exit cleanly
         if (!getline(cin, line))
         {
-            cout << endl << "The jailer hears only silence..." << endl;
-            return -1;   // -1 means the puzzle was not solved
+            throw runtime_error("Puzzle input was closed.");
         }
 
         int guess = 0;
