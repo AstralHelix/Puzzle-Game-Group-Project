@@ -1,11 +1,13 @@
-// Name: TBD
-// Date:
-// E-mail:
+// Name: Austin Zimmerman
+// Date: 10.25.26
+// E-mail: AZIMMERMAN3@DMACC.EDU
 // Overview: Room switching, progress tracker, and exit code entry.
 
 #include "game.h"
 #include "puzzles.h"
 #include <iostream>
+#include <stdexcept>
+#include <string>
 using namespace std;
 
 const int NUM_PUZZLES = 3;
@@ -65,7 +67,7 @@ public:
     State* run(Progress &progress) override;
 };
 
-//
+//Run Intro
 State* Intro::run(Progress& progress) {
     cout << "I don't know if we should be in here... This place looks like it hasn't been visited in years." << endl;
     cout << "But hey, we came all this way, why stop now? But whatever you do don't let that door clo.... *CLICK*" << endl;
@@ -76,6 +78,7 @@ State* Intro::run(Progress& progress) {
     return new ClueRoom();
 }
 
+//Run Clueroom - get choice,
 State* ClueRoom::run(Progress& progress) {
     cout << "\n[ClueRoom] Digits Found: ";
     for (int i = 0; i < NUM_PUZZLES; i++){
@@ -86,7 +89,7 @@ State* ClueRoom::run(Progress& progress) {
     cout << endl << "p - puzzle room, d - exit door, q - quit: ";
     string choice;
 
-    if (!(cin >> choice)) return nullptr;
+    if (!(cin >> choice)) return new PuzzleRoom();
 
     if (choice=="p" || choice == "P") return new PuzzleRoom();
     if (choice=="d" || choice =="D") return new CodeEntry();
@@ -98,26 +101,39 @@ State* ClueRoom::run(Progress& progress) {
 
 
 State* PuzzleRoom::run(Progress& progress) {
-    cout << "1-3- pick a puzzle, q- quit: ";
+    cout << "1-3 - pick a puzzle, c - clue room, q - quit: ";
     string choice;
 
     if (choice == "1") return new ActivePuzzle(0);
     if (choice == "2") return new ActivePuzzle(1);
     if (choice == "3") return new ActivePuzzle(2);
-    if (choice == "q") return nullptr;
+    if (choice == "c" || choice == "C") return new ClueRoom();
+    if (choice == "q" || choice == "Q") return nullptr;
 
-    //TODO: REFINE INPUT VALIDATION
-    else return nullptr;
+    else return new PuzzleRoom();
 }
 
 State* ActivePuzzle::run(Progress& progress) {
+
+    if (progress.solved[index]) {
+        cout << "Puzzle " << index + 1 << " is already solved. It's digit is " << progress.digits[index] << "." << endl;
+        return new PuzzleRoom();
+    }
+
+
+
     int digit = -1;
     if (index==0) digit = puzzle1();
     if (index==1) digit = puzzle2();
     if (index==2) digit = puzzle3();
 
 
-    cout << "Puzzle " << index + 1 << "returned:" << digit << endl;
+    if (digit >=0) {
+        progress.solved[index] = true;
+        progress.digits[index] = digit;
+        cout << "Puzzle " << index + 1 << " solved. Digit: " << digit << endl;
+    }
+
     return new PuzzleRoom();
 
 }
@@ -151,21 +167,14 @@ void runGame()
     Progress progress;
     State* current = new Intro();
 
-    while (current != nullptr) {
-        State* next = current->run(progress);
+    try {
+        while (current != nullptr) {
+            State* next = current->run(progress);
+            delete current;
+            current = next;
+        }
+    } catch (const runtime_error& e) {
         delete current;
-        current = next;
+        cout << "\nInput Closed. Exiting Game." << endl;
     }
-
-
-    // // TODO: replace this placeholder with the room-switching menu,
-    // //       progress tracker, and exit code check.
-    // cout << "[Game placeholder - running each puzzle in order]" << endl;
-
-    // int code1 = puzzle1();
-    // int code2 = puzzle2();
-    // int code3 = puzzle3();
-    // int code4 = puzzle4();
-
-    // cout << "Code numbers collected: " << code1 << code2 << code3 << code4 << endl;
 }
