@@ -252,8 +252,6 @@ int puzzle2()
         if (answer == finalAnswer) {
             cout << "\nThey rejoice!\n";
             cout << "The final lock clicks open.\n";
-            cout << "Your escape-code digit is "
-                 << ESCAPE_CODE_DIGIT << ".\n";
 
             puzzleSolved = true;
         }
